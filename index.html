@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang = "en">
+    <style>
+            /* used to design header text */
+            headertext
+            {
+                color: yellow;
+                font-size: 20px;
+                background-color: black;
+                /* Font of text */
+                font-family: 'Courier New', Courier, monospace;
+            }
+            /* used to design general text on the website */
+            generalText
+            {
+                color: red;
+            }
+            /* used to design input text boxs */
+            input[type = "text"]
+            {
+                width: 180px;
+                padding: 10px;
+                border: 2px solid blue;
+                border-radius: 8px;
+                font-size: 16px;
+                outline: none;
+                transition: all 0.3s ease;
+            }
+            /* gives boxes a little bit of glow when clicked into */
+            input[type = "text"]:focus
+            {
+                border-color: blue;
+                box-shadow: 0 0 5px darkblue;
+            }
+            /* used to style button */
+            button
+            {
+                /* Color of button */
+                background-color: blue;
+                /* Color of text in button */
+                color: white;
+                /* Size of button */
+                padding: 10px 20px;
+                /* Size of text */
+                font-size: 16px;
+                border: none;
+                /* Rounds the corners of the button*/
+                /* Greater number means more taken off of the corners */
+                border-radius: 6px;
+                /* changes the user's cursor to a pointer when hovering over the button*/
+                cursor: pointer;
+                /* Helps the button color transition not be as sharp*/
+                transition: background-color 0.3s, transform 0.2s; 
+            }
+            /* Gives the button transition when the user hovers over it*/
+            button:hover
+            {
+                background-color: #005fcc;
+            }
+            /* used for area of page that contains results */
+        </style>
+    <head>
+        <!-- This link allows for the use of semantic ui -->
+        <link rel = "stylesheet" href = "https://cdn.jsdelivr.net/npm/semantic-ui@2.5.0/dist/semantic.min.css">
+        <headerText> Rocket League: Fantasy Draft</headerText> <br>
+    </head>
+    <body>
+        <div class = "ui raised segment" id = "teamsBox" style="width:75%; margin-left: auto; margin-right: auto;">
+            <generalText>Team 1 line up:</generalText>
+            <div>
+                <input type="text" id = "TeamOnePlayer" placeholder="Enter player 1's name">
+                <input type="text" id = "TeamOnePlayer" placeholder="Enter player 2's name">
+                <input type="text" id = "TeamOnePlayer" placeholder="Enter player 3's name">
+            </div>
+            <generalText>Team 2 line up:</generalText>
+            <div>
+                <input type="text" id = "TeamTwoPlayer" placeholder="Enter player 1's name">
+                <input type="text" id = "TeamTwoPlayer" placeholder="Enter player 2's name">
+                <input type="text" id = "TeamTwoPlayer" placeholder="Enter player 3's name">
+            </div>
+        </div> 
+        <div>
+            <button id = "lineUpTest" stlye = "margin_left">Test Out Line Up!</button>
+        </div>
+        <div class = "ui raised segment" id = "results" style = "width:75%; margin-left: auto; margin-right: auto; display: none">
+            There is now something here >:()
+            <button id = "redo"> Test out another! </button>
+        </div>
+        <div>
+            <div id = "storedData" style="display:none;"> This Should change </div>
+        </div>
+    </body>
+    <!-- Start of JS code -->
+    <script>
+        // place to have elements from webpage to make changing stuff easier
+        lineUp = document.getElementById("lineUpTest");
+        results = document.getElementById("results");
+        another = document.getElementById("redo");
+        teams = document.getElementById("storedData");
+        // add event listeners where necessary
+        lineUp.addEventListener("click", showResults);
+        lineUp.addEventListener("click", storeTeams);
+        another.addEventListener("click", anotherTest);
+        // store team names
+        function storeTeams()
+        {
+            const { teamOne, teamTwo } = getTeamData();
+            localStorage.setItem('teamOne', JSON.stringify(teamOne));
+            localStorage.setItem('teamTwo', JSON.stringify(teamTwo));
+            displayData();
+        }
+        // get the names from each team and put them into Arrays
+        function getTeamData()
+        {
+            const teamOne = Array.from(document.querySelectorAll('[id^="TeamOnePlayer"]')).map(p => p.value);
+            const teamTwo = Array.from(document.querySelectorAll('[id^="TeamTwoPlayer"]')).map(p => p.value);
+            for (let i = 0; i < teamOne.length; i++)
+            {
+                if(teamOne[i] == "" || teamTwo[i] == "")
+                {
+                    alert("Not enough inputs! Please input enough player names.");
+                    break;
+                }
+            }
+            return {teamOne, teamTwo};
+        }
+        // display data for debugging purposes
+        function displayData() 
+        {
+            const savedData = localStorage.getItem('teamOne');
+            document.getElementById('storedData').innerText = savedData;
+        }
+        // show the results of the line ups
+        function showResults()
+        {
+            // style="width:75%; margin-left: auto; margin-right: auto;
+            results.style.display = "inline-block";
+            lineUp.style.display = "none";
+            teams.style.display = "inline";
+        }
+        // refresh everything for another run
+        function anotherTest()
+        {
+            results.style.display = "none";
+            lineUp.style.display = "inline-block";
+            teams.style.display = "none";
+        }
+    </script>
+</html>
