@@ -87,7 +87,7 @@
             <button id = "redo"> Test out another! </button>
         </div>
         <div>
-             Team One/Team Two Line Ups: <div id = "storedData" style="display:none;"> This Should change </div>
+             Team One/Team Two Line Up <div id = "storedData" style="display:none;"> This Should change </div>
         </div>
     </body>
     <!-- Start of JS code -->
@@ -98,31 +98,36 @@
         another = document.getElementById("redo");
         teams = document.getElementById("storedData");
         // add event listeners where necessary
-        lineUp.addEventListener("click", showResults);
         lineUp.addEventListener("click", storeTeams);
         another.addEventListener("click", anotherTest);
         // store team names
         function storeTeams()
         {
-            const { teamOne, teamTwo } = getTeamData();
-            localStorage.setItem('teamOne', JSON.stringify(teamOne));
-            localStorage.setItem('teamTwo', JSON.stringify(teamTwo));
-            displayData();
+            const { teamOne, teamTwo , fullTeams} = getTeamData();
+            if(fullTeams)
+            {
+                localStorage.setItem('teamOne', JSON.stringify(teamOne));
+                localStorage.setItem('teamTwo', JSON.stringify(teamTwo));
+                displayData();
+                showResults();
+            }
         }
         // get the names from each team and put them into Arrays
         function getTeamData()
         {
             const teamOne = Array.from(document.querySelectorAll('[id^="TeamOnePlayer"]')).map(p => p.value);
             const teamTwo = Array.from(document.querySelectorAll('[id^="TeamTwoPlayer"]')).map(p => p.value);
+            const fullTeams = true;
             for (let i = 0; i < teamOne.length; i++)
             {
                 if(teamOne[i] == "" || teamTwo[i] == "")
                 {
                     alert("Not enough inputs! Please input enough player names.");
+                    fullTeams = false;
                     break;
                 }
             }
-            return {teamOne, teamTwo};
+            return {teamOne, teamTwo, fullTeams};
         }
         // display data for debugging purposes
         function displayData() 
