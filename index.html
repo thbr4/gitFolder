@@ -83,11 +83,11 @@
             <button id = "lineUpTest" stlye = "margin_left">Test Out Line Up!</button>
         </div>
         <div class = "ui raised segment" id = "results" style = "width:75%; margin-left: auto; margin-right: auto; display: none">
-            There is now something here >:()
+            This is where the result will be <br>
             <button id = "redo"> Test out another! </button>
         </div>
         <div>
-            <div id = "storedData" style="display:none;"> This Should change </div>
+             Team One/Team Two Line Ups: <div id = "storedData" style="display:none;"> This Should change </div>
         </div>
     </body>
     <!-- Start of JS code -->
@@ -127,8 +127,9 @@
         // display data for debugging purposes
         function displayData() 
         {
-            const savedData = localStorage.getItem('teamOne');
-            document.getElementById('storedData').innerText = savedData;
+            const savedTeamOne = localStorage.getItem('teamOne');
+            const savedTeamTwo = localStorage.getItem('teamTwo');
+            document.getElementById('storedData').innerText = savedTeamOne + savedTeamTwo;
         }
         // show the results of the line ups
         function showResults()
