@@ -67,23 +67,23 @@
     <body>
         <div class = "ui raised segment" id = "teamsBox" style="width:75%; margin-left: auto; margin-right: auto;">
             <generalText>Team 1 line up:</generalText>
-            <div>
+            <form id = "teamOne">
                 <input type="text" id = "TeamOnePlayer" placeholder="Enter player 1's name">
                 <input type="text" id = "TeamOnePlayer" placeholder="Enter player 2's name">
                 <input type="text" id = "TeamOnePlayer" placeholder="Enter player 3's name">
-            </div>
+            </form>
             <generalText>Team 2 line up:</generalText>
-            <div>
+            <form id = "teamTwo">
                 <input type="text" id = "TeamTwoPlayer" placeholder="Enter player 1's name">
                 <input type="text" id = "TeamTwoPlayer" placeholder="Enter player 2's name">
                 <input type="text" id = "TeamTwoPlayer" placeholder="Enter player 3's name">
-            </div>
+            </form>
         </div> 
         <div>
             <button id = "lineUpTest" stlye = "margin_left">Test Out Line Up!</button>
         </div>
         <div class = "ui raised segment" id = "results" style = "width:75%; margin-left: auto; margin-right: auto; display: none">
-            This is where the result will be <br>
+            This is where the result will be (i.e team one wins!) <br>
             <button id = "redo"> Test out another! </button>
         </div>
         <div>
@@ -104,6 +104,7 @@
         function storeTeams()
         {
             const { teamOne, teamTwo , fullTeams} = getTeamData();
+            // Only do all the changes if we got full teams
             if(fullTeams)
             {
                 localStorage.setItem('teamOne', JSON.stringify(teamOne));
@@ -150,6 +151,13 @@
             results.style.display = "none";
             lineUp.style.display = "inline-block";
             teams.style.display = "none";
+            clearText();
+        }
+        // clear the text boxes for another run
+        function clearText()
+        {
+            document.getElementById("teamOne").reset();
+            document.getElementById("teamTwo").reset();
         }
     </script>
 </html>
